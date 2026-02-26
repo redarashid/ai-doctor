@@ -1,7 +1,9 @@
+import Login from "../app/login/page";
+
 export default function Home() {
   return (
     <div>
-      <h1>Welcome to AI Doctor</h1>
+      <Login />
     </div>
   );
 }
