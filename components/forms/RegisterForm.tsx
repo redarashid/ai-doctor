@@ -17,26 +17,21 @@ export default function Login() {
       return;
     }
     setError("");
-    // هنا تضع منطق تسجيل الدخول الحقيقي
     alert("Logged in successfully!");
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#f6fafd]">
       <div className="flex flex-col items-center mb-8">
-        <div className="bg-blue-100 rounded-full p-3 mb-2">
-          <svg width="36" height="36" fill="none" viewBox="0 0 24 24">
-            <path
-              d="M4 12h3l2 5 4-10 2 5h5"
-              stroke="#2563eb"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+        <div className="flex items-center mb-6 gap-4">
+          <div>
+            <img src="/imges/logo.jpeg" className="w-14 h-14 object-cover" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold">AI Doctor</h1>
+            <span className="text-gray-500 text-sm">Your Health Assistant</span>
+          </div>
         </div>
-        <h1 className="text-2xl font-bold">AI Doctor</h1>
-        <span className="text-gray-500 text-sm">Your Health Assistant</span>
       </div>
       <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold mb-2">Welcome Back</h2>
@@ -176,7 +171,7 @@ export default function Login() {
             type="button"
             onClick={() => router.push("/login")}
             className="text-blue-600 font-medium hover:underline cursor-pointer">
-            Sign in
+            Sign Up
           </button>
         </p>
       </div>
@@ -184,8 +179,8 @@ export default function Login() {
         By signing in, you agree to our{" "}
         <a href="#" className="text-blue-600 hover:underline">
           Terms of Service
-        </a>{" "}
-        and{" "}
+        </a>
+        and
         <a href="#" className="text-blue-600 hover:underline">
           Privacy Policy
         </a>
