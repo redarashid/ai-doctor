@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🩺 AI Doctor
 
-## Getting Started
+AI Doctor is an intelligent web-based health assistant designed to deliver preliminary medical insights through advanced artificial intelligence.
+The platform empowers users to input their symptoms and receive instant analysis, possible condition suggestions, and actionable recommendations — enabling informed health decisions in seconds.
 
-First, run the development server:
+🚀 Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+AI Doctor bridges the gap between users and initial health awareness by providing:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Instant AI-driven symptom evaluation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Data-informed condition predictions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Personalized next-step recommendations
 
-## Learn More
+A secure and privacy-focused environment
 
-To learn more about Next.js, take a look at the following resources:
+The system is designed to offer fast, accessible, and user-friendly preliminary guidance while emphasizing that it does not replace professional medical consultation.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+✨ Core Features
+🔍 AI-Powered Symptom Analysis
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Utilizes advanced machine learning models to analyze user-reported symptoms in real time.
 
-## Deploy on Vercel
+🧠 Possible Condition Suggestions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Generates a list of potential health conditions based on symptom patterns and intelligent data processing.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📋 Personalized Recommendations
+
+Provides tailored guidance and suggested next steps to support informed decision-making.
+
+🎨 Modern & Intuitive UI
+
+Clean, responsive, and accessible interface built for seamless user experience across devices.
+
+🔐 Privacy-First Approach
+
+User data is handled securely and is never shared with third parties.
+
+🛠️ Technology Stack
+
+Frontend: Next.js
+
+Styling: Tailwind CSS
+
+Animations: Framer Motion
+
+Icons: Lucide React
+
+Architecture: App Router (Server & Client Component Structure)
+
+🎯 Project Goal
+
+The primary objective of AI Doctor is to enhance health awareness by leveraging artificial intelligence to provide immediate, informative, and user-friendly health insights.
+
+⚠️ Medical Disclaimer
+
+AI Doctor is intended for informational and educational purposes only.
+It does not provide medical diagnoses, prescriptions, or treatment plans.
+
+Users should always consult a qualified healthcare professional for medical advice, diagnosis, or treatment.
