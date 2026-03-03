@@ -1,62 +1,34 @@
-🩺 AI Doctor
+# 🩺 AI Doctor
 
-AI Doctor is an intelligent web-based health assistant designed to deliver preliminary medical insights through advanced artificial intelligence.
-The platform empowers users to input their symptoms and receive instant analysis, possible condition suggestions, and actionable recommendations — enabling informed health decisions in seconds.
+AI Doctor is an intelligent web-based health assistant designed to deliver preliminary medical insights powered by advanced AI.
 
-🚀 Overview
+---
 
-AI Doctor bridges the gap between users and initial health awareness by providing:
+## 🚀 Overview
 
-Instant AI-driven symptom evaluation
+AI Doctor enables users to input symptoms and receive possible condition suggestions with actionable recommendations.
 
-Data-informed condition predictions
+---
 
-Personalized next-step recommendations
+## ✨ Core Features
 
-A secure and privacy-focused environment
+- AI-Powered Symptom Analysis
+- Possible Condition Suggestions
+- Personalized Recommendations
+- Modern & Intuitive UI
+- Privacy-First Approach
 
-The system is designed to offer fast, accessible, and user-friendly preliminary guidance while emphasizing that it does not replace professional medical consultation.
+---
 
-✨ Core Features
-🔍 AI-Powered Symptom Analysis
+## 🛠️ Technology Stack
 
-Utilizes advanced machine learning models to analyze user-reported symptoms in real time.
+- Next.js
+- Tailwind CSS
+- Framer Motion
+- Lucide React
 
-🧠 Possible Condition Suggestions
+---
 
-Generates a list of potential health conditions based on symptom patterns and intelligent data processing.
+## ⚠️ Medical Disclaimer
 
-📋 Personalized Recommendations
-
-Provides tailored guidance and suggested next steps to support informed decision-making.
-
-🎨 Modern & Intuitive UI
-
-Clean, responsive, and accessible interface built for seamless user experience across devices.
-
-🔐 Privacy-First Approach
-
-User data is handled securely and is never shared with third parties.
-
-🛠️ Technology Stack
-
-Frontend: Next.js
-
-Styling: Tailwind CSS
-
-Animations: Framer Motion
-
-Icons: Lucide React
-
-Architecture: App Router (Server & Client Component Structure)
-
-🎯 Project Goal
-
-The primary objective of AI Doctor is to enhance health awareness by leveraging artificial intelligence to provide immediate, informative, and user-friendly health insights.
-
-⚠️ Medical Disclaimer
-
-AI Doctor is intended for informational and educational purposes only.
-It does not provide medical diagnoses, prescriptions, or treatment plans.
-
-Users should always consult a qualified healthcare professional for medical advice, diagnosis, or treatment.
+AI Doctor is intended for informational and educational purposes only. It does not replace professional medical advice.
