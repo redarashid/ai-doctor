@@ -81,8 +81,8 @@ export default function SymptomsPage() {
 
       {/* Navbar */}
       <nav className="w-full bg-white shadow-sm sticky top-0 z-10">
-        <div className="flex border-b border-gray-100  max-w-2xl">
-          <div className="flex items-center gap-4 px-8 py-4 w-full max-w-2xl">
+        <div className="flex border-b border-gray-100 w-full max-w-screen-2xl mx-auto">
+          <div className="flex items-center gap-4 px-8 py-4 w-full">
             <button
               className="text-gray-500 hover:text-blue-600 transition"
               onClick={() => router.back()}>
@@ -113,7 +113,7 @@ export default function SymptomsPage() {
 
       {/* Title & Subtitle */}
       <div className="text-center mt-8">
-        <h1 className="text-4xl font-bold mb-2">Describe Your Symptoms</h1>
+        <h1 className="text-5xl font-bold mb-2">Describe Your Symptoms</h1>
         <p className="text-gray-500 text-lg max-w-xl mx-auto">
           Select or search for symptoms you are experiencing. Our AI will
           analyze them to provide preliminary health insights.
@@ -122,7 +122,7 @@ export default function SymptomsPage() {
 
       {/* Search Box */}
       <div className="flex justify-center mt-8">
-        <div className="relative w-full max-w-2xl">
+        <div className="relative w-full max-w-5xl">
           <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
@@ -136,7 +136,7 @@ export default function SymptomsPage() {
       </div>
 
       {/* Common Symptoms */}
-      <div className="max-w-3xl mx-auto mt-8">
+      <div className="max-w-5xl mx-auto mt-8">
         <div className="font-semibold text-lg mb-3">Common Symptoms</div>
         <div className="flex flex-wrap gap-3">
           {filteredSymptoms.length > 0 ? (
@@ -173,7 +173,7 @@ export default function SymptomsPage() {
         </div>
         <button
           type="button"
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-400 to-cyan-400 text-white font-semibold text-lg flex items-center justify-center gap-2 shadow transition disabled:opacity-60"
+          className="w-full py-5 rounded-xl bg-gradient-to-r from-blue-400 to-cyan-400 text-white font-semibold text-lg flex items-center justify-center gap-2 shadow transition disabled:opacity-60"
           disabled={selected.length === 0 || loading}
           onClick={handleAnalyze}>
           <FaSyncAlt className="animate-spin-slow" />
@@ -181,5 +181,6 @@ export default function SymptomsPage() {
         </button>
       </div>
     </div>
+    
   );
 }

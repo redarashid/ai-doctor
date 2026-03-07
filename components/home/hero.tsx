@@ -9,7 +9,7 @@ export default function Home() {
     <div>
       {/* NAVBAR */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
           {/* LEFT — LOGO */}
           <div className="flex items-center gap-3">
             <Image
@@ -55,11 +55,11 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="bg-gray-50 py-10">
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+      <section className="bg-gray-50 min-h-screen flex items-center py-10">
+        <div className="max-w-screen-2xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
           {/* LEFT SIDE */}
           <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-5">
+            <h1 className="text-6xl lg:text-7xl font-bold leading-tight">
               Understand Your Symptoms with{" "}
               <span className="text-blue-600">AI Assistance</span>
             </h1>
@@ -71,7 +71,7 @@ export default function Home() {
             {/* BUTTONS */}
             <div className="flex gap-4 mt-6">
               <Link href="/symptoms">
-                <button className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-5 py-2 rounded-xl font-semibold shadow hover:from-blue-700 transition text-base">
+                <button className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-5 py-2 rounded-xl font-semibold shadow-lg hover:shadow-blue-300 hover:scale-105 transition text-base">
                   Start Symptom Analysis →
                 </button>
               </Link>
@@ -87,9 +87,9 @@ export default function Home() {
           </div>
           {/* RIGHT SIDE IMAGE */}
           <div className="relative">
-            <div className="relative rounded-3xl shadow-lg overflow-hidden w-full h-[220px] md:h-[260px]">
+            <div className="relative rounded-3xl shadow-lg overflow-hidden w-full h-[450px] md:h-[600px]">
               <Image
-                src="/imges/hero.jpg"
+                src="/imges/hero.jpg" 
                 alt="Medical Lab"
                 fill
                 className="object-cover"
@@ -124,9 +124,9 @@ export default function Home() {
 
       {/* FEATURES SECTION */}
       <section className="bg-gradient-to-b from-gray-50 to-blue-50 py-10">
-        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+        <div className="max-w-[1600px] mx-auto px-6 grid md:grid-cols-3 gap-8">
           {/* CARD 1 */}
-          <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-lg transition">
+          <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
               <Activity color="white" size={20} />
             </div>
@@ -137,7 +137,7 @@ export default function Home() {
             </p>
           </div>
           {/* CARD 2 */}
-          <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-lg transition">
+          <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mb-4">
               <Shield color="white" size={20} />
             </div>
@@ -148,7 +148,7 @@ export default function Home() {
             </p>
           </div>
           {/* CARD 3 */}
-          <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-lg transition">
+          <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
               <Sparkles color="white" size={20} />
             </div>
@@ -162,7 +162,7 @@ export default function Home() {
       </section>
 
       {/* MEDICAL DISCLAIMER */}
-      <div className="max-w-6xl mx-auto px-4 mt-10">
+      <div className="max-w-screen-2xl mx-auto px-4 mt-10">
         <div className="bg-amber-100 border border-amber-400 text-amber-900 rounded-2xl px-6 py-4 shadow-md">
           <p className="text-base">
             <span className="font-bold">Medical Disclaimer:</span> This AI tool
