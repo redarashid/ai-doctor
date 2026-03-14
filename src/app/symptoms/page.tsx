@@ -22,8 +22,11 @@ const COMMON_SYMPTOMS = [
 
 export default function SymptomsPage() {
   const [search, setSearch] = useState("");
+
   const [selected, setSelected] = useState<string[]>([]);
+
   const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const filteredSymptoms = COMMON_SYMPTOMS.filter((symptom) =>
@@ -41,18 +44,18 @@ export default function SymptomsPage() {
   const handleAnalyze = () => {
     if (selected.length > 0) {
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        router.push("/result");
-      }, 2500);
     }
   };
+  if (loading) {
+    return <LoadingScreen onComplete={() => router.push("/result")} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white relative">
-      <LoadingScreen />
+      {/* {loading && <LoadingScreen />} */}
 
       {/* Navbar */}
+
       <nav className="w-full bg-white shadow-sm sticky top-0 z-10">
         <div className="flex border-b border-gray-100 w-full max-w-screen-2xl mx-auto">
           <div className="flex items-center gap-4 px-8 py-4 w-full">
@@ -61,6 +64,7 @@ export default function SymptomsPage() {
               onClick={() => router.back()}>
               <FaArrowLeft size={20} />
             </button>
+
             <div className="flex items-center gap-3">
               <div className="bg-blue-100 rounded-full p-2">
                 <svg width="32" height="32" fill="none" viewBox="0 0 24 24">
@@ -73,8 +77,10 @@ export default function SymptomsPage() {
                   />
                 </svg>
               </div>
+
               <div>
                 <div className="font-bold text-lg">AI Doctor</div>
+
                 <div className="text-xs text-gray-500 -mt-1">
                   Symptom Analysis
                 </div>
@@ -85,8 +91,10 @@ export default function SymptomsPage() {
       </nav>
 
       {/* Title & Subtitle */}
+
       <div className="text-center mt-8">
         <h1 className="text-5xl font-bold mb-2">Describe Your Symptoms</h1>
+
         <p className="text-gray-500 text-lg max-w-xl mx-auto">
           Select or search for symptoms you are experiencing. Our AI will
           analyze them to provide preliminary health insights.
@@ -94,9 +102,11 @@ export default function SymptomsPage() {
       </div>
 
       {/* Search Box */}
+
       <div className="flex justify-center mt-8">
         <div className="relative w-full max-w-5xl">
           <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
           <input
             type="text"
             value={search}
@@ -109,8 +119,10 @@ export default function SymptomsPage() {
       </div>
 
       {/* Common Symptoms */}
+
       <div className="max-w-5xl mx-auto mt-8">
         <div className="font-semibold text-lg mb-3">Common Symptoms</div>
+
         <div className="flex flex-wrap gap-3">
           {filteredSymptoms.length > 0 ? (
             filteredSymptoms.map((symptom) => (
@@ -137,6 +149,7 @@ export default function SymptomsPage() {
         <div className="w-full mb-4">
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-2 items-start">
             <span className="font-bold text-blue-700">Note:</span>
+
             <span className="text-gray-600 text-sm">
               The more symptoms you provide, the more accurate our AI analysis
               will be. Please be as specific as possible about what you are
@@ -144,6 +157,7 @@ export default function SymptomsPage() {
             </span>
           </div>
         </div>
+
         <button
           type="button"
           className="w-full py-5 rounded-xl bg-gradient-to-r from-blue-400 to-cyan-400 text-white font-semibold text-lg flex items-center justify-center gap-2 shadow transition disabled:opacity-60"
