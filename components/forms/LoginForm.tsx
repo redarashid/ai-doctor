@@ -1,289 +1,167 @@
 "use client";
 
-import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import {
-  FaUser,
-  FaEnvelope,
-  FaLock,
-  FaCalendarAlt,
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Inputs = {
-  fullName: string;
-  email: string;
-  dob: string;
-  password: string;
-  confirmPassword: string;
-  terms: boolean;
-};
-
-const RegisterPage: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<Inputs>();
-
-  // State for password visibility
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-  };
+export default function Login() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSignIn = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      setError("Please fill in both email and password.");
+      return;
+    }
+    setError("");
+    alert("Logged in successfully!");
+  };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white">
-      {/* Logo and Title */}
-      <div className="flex items-center mb-6 gap-4">
-        <div>
-          <img src="/imges/logo.jpeg" className="w-14 h-14 object-cover" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold">AI Doctor</h1>
-          <span className="text-gray-500 text-sm">Your Health Assistant</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#f6fafd]">
+      <div className="flex flex-col items-center mb-8">
+        <div className="flex items-center mb-6 gap-4">
+          <div>
+            <img src="/imges/logo.jpeg" className="w-14 h-14 object-cover" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold">AI Doctor</h1>
+            <span className="text-gray-500 text-sm">Your Health Assistant</span>
+          </div>
         </div>
       </div>
-
-      {/* Form */}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md"
-        noValidate>
-        <h2 className="text-2xl font-bold mb-1">Create Account</h2>
-        <p className="mb-6 text-gray-500">
-          Start your journey to better health insights
+      <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-2">Welcome Back</h2>
+        <p className="text-gray-500 mb-6">
+          Sign in to access your health dashboard
         </p>
-
-        {/* Full Name */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Full Name</label>
-          <div className="relative">
-            <FaUser className="absolute left-3 top-3 text-gray-400" />
-            <input
-              {...register("fullName", {
-                required: "Full name is required",
-                pattern: {
-                  value: /^[A-Za-z\s]+$/,
-                  message: "Full name must contain only letters",
-                },
-              })}
-              placeholder="John Doe"
-              className={`pl-10 pr-3 py-2 w-full border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition ${
-                errors.fullName ? "border-red-400" : "border-gray-200"
-              }`}
-            />
+        <form className="space-y-4" onSubmit={handleSignIn}>
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Email Address
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                {/* أيقونة الإيميل */}
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+                  <path
+                    d="M4 4h16v16H4V4zm0 0l8 8 8-8"
+                    stroke="#94a3b8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
           </div>
-          {errors.fullName && (
-            <span className="text-red-500 text-xs mt-1 block">
-              {errors.fullName.message}
-            </span>
-          )}
-        </div>
-
-        {/* Email */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">
-            Email Address
-          </label>
-          <div className="relative">
-            <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
-            <input
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Enter a valid email address",
-                },
-              })}
-              type="email"
-              placeholder="you@example.com"
-              className={`pl-10 pr-3 py-2 w-full border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition ${
-                errors.email ? "border-red-400" : "border-gray-200"
-              }`}
-            />
+          <div>
+            <div className="flex justify-between items-center mb-1">
+              <label className="block text-sm font-medium">Password</label>
+              <a
+                href="#"
+                className="text-blue-600 text-sm font-medium hover:underline">
+                Forgot Password?
+              </a>
+            </div>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+                  <path
+                    d="M12 17a2 2 0 100-4 2 2 0 000 4zm6-6V9a6 6 0 10-12 0v2"
+                    stroke="#94a3b8"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <rect
+                    x="4"
+                    y="11"
+                    width="16"
+                    height="9"
+                    rx="2"
+                    stroke="#94a3b8"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </span>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full pl-10 pr-10 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-blue-600 transition"
+                onClick={() => setShowPassword((prev) => !prev)}
+                title={showPassword ? "Hide password" : "Show password"}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 12C3.75 7.5 7.5 4.5 12 4.5c4.5 0 8.25 3 9.75 7.5-1.5 4.5-5.25 7.5-9.75 7.5s-8.25-3-9.75-7.5z"
+                  />
+                </svg>
+              </span>
+            </div>
           </div>
-          {errors.email && (
-            <span className="text-red-500 text-xs mt-1 block">
-              {errors.email.message}
-            </span>
-          )}
-        </div>
-
-        {/* Date of Birth */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">
-            Date of Birth
-          </label>
-          <div className="relative">
-            <FaCalendarAlt className="absolute left-3 top-3 text-gray-400" />
-            <input
-              {...register("dob", { required: "Date of birth is required" })}
-              type="date"
-              className={`pl-10 pr-3 py-2 w-full border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition ${
-                errors.dob ? "border-red-400" : "border-gray-200"
-              }`}
-            />
+          <div className="flex items-center">
+            <input type="checkbox" id="remember" className="mr-2" />
+            <label htmlFor="remember" className="text-sm">
+              Remember me for 30 days
+            </label>
           </div>
-          {errors.dob && (
-            <span className="text-red-500 text-xs mt-1 block">
-              {errors.dob.message}
-            </span>
+          {error && (
+            <div className="text-red-600 text-sm text-center">{error}</div>
           )}
-        </div>
-
-        {/* Password */}
-        <div className="mb-2">
-          <label className="block text-sm font-medium mb-1">Password</label>
-          <div className="relative">
-            <FaLock className="absolute left-3 top-3 text-gray-400" />
-            <input
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-              })}
-              type={showPassword ? "text" : "password"}
-              placeholder="Create a strong password"
-              className={`pl-10 pr-10 py-2 w-full border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition ${
-                errors.password ? "border-red-400" : "border-gray-200"
-              }`}
-            />
-            <button
-              type="button"
-              tabIndex={-1}
-              className="absolute right-3 top-3 text-gray-400 cursor-pointer hover:text-blue-500 transition"
-              onClick={() => setShowPassword((prev) => !prev)}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-          <span className="text-xs text-gray-400 ml-1">
-            Must be at least 8 characters
-          </span>
-          {errors.password && (
-            <span className="text-red-500 text-xs mt-1 block">
-              {errors.password.message}
-            </span>
-          )}
-        </div>
-
-        {/* Confirm Password */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">
-            Confirm Password
-          </label>
-          <div className="relative">
-            <input
-              {...register("confirmPassword", {
-                required: "Please confirm your password",
-                validate: (value) =>
-                  value === watch("password") || "Passwords do not match",
-              })}
-              type={showConfirm ? "text" : "password"}
-              placeholder="Re-enter your password"
-              className={`pl-3 pr-10 py-2 w-full border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition ${
-                errors.confirmPassword ? "border-red-400" : "border-gray-200"
-              }`}
-            />
-            <button
-              type="button"
-              tabIndex={-1}
-              className="absolute right-3 top-3 text-gray-400 cursor-pointer hover:text-blue-500 transition"
-              onClick={() => setShowConfirm((prev) => !prev)}>
-              {showConfirm ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-          {errors.confirmPassword && (
-            <span className="text-red-500 text-xs mt-1 block">
-              {errors.confirmPassword.message}
-            </span>
-          )}
-        </div>
-
-        {/* Terms */}
-        <div className="flex items-center mb-4">
-          <input
-            type="checkbox"
-            {...register("terms", { required: "You must agree to the terms" })}
-            className="mr-2 accent-blue-500 cursor-pointer"
-          />
-          <span className="text-sm">
-            I agree to the{" "}
-            <a
-              href="#"
-              className="text-blue-600 underline hover:text-blue-800 transition">
-              Terms of Service
-            </a>{" "}
-            and{" "}
-            <a
-              href="#"
-              className="text-blue-600 underline hover:text-blue-800 transition">
-              Privacy Policy
-            </a>
-          </span>
-        </div>
-        {errors.terms && (
-          <span className="text-red-500 text-xs mt-1 block">
-            {errors.terms.message}
-          </span>
-        )}
-
-        {/* Submit */}
-        <button
-          type="submit"
-          className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-2 rounded-lg font-semibold text-lg flex items-center justify-center gap-2 mb-4 transition hover:scale-[1.02] hover:shadow-lg cursor-pointer">
-          Create Account <span className="ml-2">&rarr;</span>
-        </button>
-
-        {/* Or sign up with */}
-        <div className="flex items-center my-6">
-          <div className="flex-grow h-px bg-gray-200"></div>
-          <span className="mx-3 text-gray-400 text-sm">Or continue with</span>
-          <div className="flex-grow h-px bg-gray-200"></div>
-        </div>
-
-        <div className="flex justify-center gap-4 mb-2">
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-semibold py-2 rounded-xl shadow hover:from-blue-700 transition cursor-pointer">
+            Sign In &rarr;
+          </button>
+        </form>
+        <p className="text-center text-sm mt-6">
+          Do Not have an account?{" "}
           <button
             type="button"
-            className="flex items-center gap-2 border rounded-lg px-4 py-2 bg-gray-50 hover:bg-gray-100 transition cursor-pointer">
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google"
-              className="w-5 h-5"
-            />
-            Google
+            onClick={() => router.push("/login")}
+            className="text-blue-600 font-medium hover:underline cursor-pointer">
+            Sign Up
           </button>
-          <button
-            type="button"
-            className="flex items-center gap-2 border rounded-lg px-4 py-2 bg-gray-50 hover:bg-gray-100 transition cursor-pointer">
-            <img
-              src="https://www.svgrepo.com/show/512317/github-142.svg"
-              alt="GitHub"
-              className="w-5 h-5"
-            />
-            GitHub
-          </button>
-        </div>
-        <div className="text-center text-sm">
-          Already have an account?
-          <button
-            type="button"
-            onClick={() => router.push("/register")}
-            className="text-blue-600 font-medium hover:underline">
-            Sign in
-          </button>
-        </div>
-      </form>
+        </p>
+      </div>
+      <p className="text-sm text-gray-400 mt-6">
+        By signing in, you agree to our{" "}
+        <a href="#" className="text-blue-600 hover:underline">
+          Terms of Service
+        </a>
+        and
+        <a href="#" className="text-blue-600 hover:underline">
+          Privacy Policy
+        </a>
+      </p>
     </div>
   );
-};
-
-export default RegisterPage;
+}
