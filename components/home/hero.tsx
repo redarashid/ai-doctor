@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Activity, Shield, Sparkles } from "lucide-react";
 
-export default function Home() {
+export default function Hero() {
   return (
     <div>
       <div className="max-w-screen-2xl mx-auto px-30">

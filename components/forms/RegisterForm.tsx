@@ -32,11 +32,46 @@ const RegisterPage: React.FC = () => {
   // State for password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-  };
   const router = useRouter();
+
+  const onSubmit = async (data: Inputs) => {
+    if (data.password !== data.confirmPassword) {
+      alert("Passwords do not match ❌");
+      return;
+    }
+
+    try {
+      const userData = {
+        name: data.fullName,
+        email: data.email,
+        password: data.password,
+        password_confirmation: data.confirmPassword,
+      };
+
+      const res = await fetch(
+        "https://brenden-edificatory-gisela.ngrok-free.dev/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        },
+      );
+
+      const result = await res.json();
+      console.log(result);
+
+      if (res.ok) {
+        router.push(`/verify-email?email=${data.email}`);
+      } else {
+        alert(JSON.stringify(result.errors));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong ❌");
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white">
@@ -55,7 +90,8 @@ const RegisterPage: React.FC = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md"
-        noValidate>
+        noValidate
+      >
         <h2 className="text-2xl font-bold mb-1">Create Account</h2>
         <p className="mb-6 text-gray-500">
           Start your journey to better health insights
@@ -116,28 +152,6 @@ const RegisterPage: React.FC = () => {
           )}
         </div>
 
-        {/* Date of Birth */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">
-            Date of Birth
-          </label>
-          <div className="relative">
-            <FaCalendarAlt className="absolute left-3 top-3 text-gray-400" />
-            <input
-              {...register("dob", { required: "Date of birth is required" })}
-              type="date"
-              className={`pl-10 pr-3 py-2 w-full border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition ${
-                errors.dob ? "border-red-400" : "border-gray-200"
-              }`}
-            />
-          </div>
-          {errors.dob && (
-            <span className="text-red-500 text-xs mt-1 block">
-              {errors.dob.message}
-            </span>
-          )}
-        </div>
-
         {/* Password */}
         <div className="mb-2">
           <label className="block text-sm font-medium mb-1">Password</label>
@@ -161,7 +175,8 @@ const RegisterPage: React.FC = () => {
               type="button"
               tabIndex={-1}
               className="absolute right-3 top-3 text-gray-400 cursor-pointer hover:text-blue-500 transition"
-              onClick={() => setShowPassword((prev) => !prev)}>
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
@@ -197,7 +212,8 @@ const RegisterPage: React.FC = () => {
               type="button"
               tabIndex={-1}
               className="absolute right-3 top-3 text-gray-400 cursor-pointer hover:text-blue-500 transition"
-              onClick={() => setShowConfirm((prev) => !prev)}>
+              onClick={() => setShowConfirm((prev) => !prev)}
+            >
               {showConfirm ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
@@ -219,13 +235,15 @@ const RegisterPage: React.FC = () => {
             I agree to the{" "}
             <a
               href="#"
-              className="text-blue-600 underline hover:text-blue-800 transition">
+              className="text-blue-600 underline hover:text-blue-800 transition"
+            >
               Terms of Service
             </a>{" "}
             and{" "}
             <a
               href="#"
-              className="text-blue-600 underline hover:text-blue-800 transition">
+              className="text-blue-600 underline hover:text-blue-800 transition"
+            >
               Privacy Policy
             </a>
           </span>
@@ -239,45 +257,18 @@ const RegisterPage: React.FC = () => {
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-2 rounded-lg font-semibold text-lg flex items-center justify-center gap-2 mb-4 transition hover:scale-[1.02] hover:shadow-lg cursor-pointer">
+          className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-2 rounded-lg font-semibold text-lg flex items-center justify-center gap-2 mb-4 transition hover:scale-[1.02] hover:shadow-lg cursor-pointer"
+        >
           Create Account <span className="ml-2">&rarr;</span>
         </button>
 
-        {/* Or sign up with */}
-        <div className="flex items-center my-6">
-          <div className="flex-grow h-px bg-gray-200"></div>
-          <span className="mx-3 text-gray-400 text-sm">Or continue with</span>
-          <div className="flex-grow h-px bg-gray-200"></div>
-        </div>
-
-        <div className="flex justify-center gap-4 mb-2">
-          <button
-            type="button"
-            className="flex items-center gap-2 border rounded-lg px-4 py-2 bg-gray-50 hover:bg-gray-100 transition cursor-pointer">
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              alt="Google"
-              className="w-5 h-5"
-            />
-            Google
-          </button>
-          <button
-            type="button"
-            className="flex items-center gap-2 border rounded-lg px-4 py-2 bg-gray-50 hover:bg-gray-100 transition cursor-pointer">
-            <img
-              src="https://www.svgrepo.com/show/512317/github-142.svg"
-              alt="GitHub"
-              className="w-5 h-5"
-            />
-            GitHub
-          </button>
-        </div>
         <div className="text-center text-sm">
           Already have an account?
           <button
             type="button"
-            onClick={() => router.push("/register")}
-            className="text-blue-600 font-medium hover:underline">
+            onClick={() => router.push("/login")}
+            className="text-blue-600 font-medium hover:underline"
+          >
             Sign in
           </button>
         </div>

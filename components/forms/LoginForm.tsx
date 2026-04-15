@@ -10,14 +10,44 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSignIn = (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!email || !password) {
       setError("Please fill in both email and password.");
       return;
     }
+
     setError("");
-    alert("Logged in successfully!");
+
+    try {
+      const res = await fetch(
+        "https://brenden-edificatory-gisela.ngrok-free.dev/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        },
+      );
+
+      const data = await res.json();
+      console.log(data);
+
+      if (res.ok) {
+      
+        router.push("/home");
+      } else {
+        setError(data.message || "Invalid email or password ❌");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong ❌");
+    }
   };
 
   return (
@@ -70,7 +100,8 @@ export default function Login() {
               <label className="block text-sm font-medium">Password</label>
               <a
                 href="#"
-                className="text-blue-600 text-sm font-medium hover:underline">
+                className="text-blue-600 text-sm font-medium hover:underline"
+              >
                 Forgot Password?
               </a>
             </div>
@@ -105,14 +136,16 @@ export default function Login() {
               <span
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer hover:text-blue-600 transition"
                 onClick={() => setShowPassword((prev) => !prev)}
-                title={showPassword ? "Hide password" : "Show password"}>
+                title={showPassword ? "Hide password" : "Show password"}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-5 h-5">
+                  className="w-5 h-5"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -138,7 +171,8 @@ export default function Login() {
           )}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-semibold py-2 rounded-xl shadow hover:from-blue-700 transition cursor-pointer">
+            className="w-full bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-semibold py-2 rounded-xl shadow hover:from-blue-700 transition cursor-pointer"
+          >
             Sign In &rarr;
           </button>
         </form>
@@ -146,8 +180,9 @@ export default function Login() {
           Do Not have an account?{" "}
           <button
             type="button"
-            onClick={() => router.push("/login")}
-            className="text-blue-600 font-medium hover:underline cursor-pointer">
+            onClick={() => router.push("/register")}
+            className="text-blue-600 font-medium hover:underline cursor-pointer"
+          >
             Sign Up
           </button>
         </p>
