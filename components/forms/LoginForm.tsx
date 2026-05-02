@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -39,7 +40,6 @@ export default function Login() {
       console.log(data);
 
       if (res.ok) {
-      
         router.push("/home");
       } else {
         setError(data.message || "Invalid email or password ❌");
@@ -98,12 +98,13 @@ export default function Login() {
           <div>
             <div className="flex justify-between items-center mb-1">
               <label className="block text-sm font-medium">Password</label>
-              <a
-                href="#"
+              <Link
+                href="/forgot-password"
                 className="text-blue-600 text-sm font-medium hover:underline"
               >
                 Forgot Password?
-              </a>
+              </Link>
+              
             </div>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
