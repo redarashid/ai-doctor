@@ -1,335 +1,427 @@
 "use client";
-
-import Link from "next/link";
-import {
-  CheckCircle,
-  ArrowLeft,
-  Info,
-  Home,
-  CalendarDays,
-  Phone,
-} from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function ResultPage() {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pb-16">
-      {/* Navbar */}
-      <nav className="w-full bg-white border-b border-blue-50 shadow-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          {/* Back */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-slate-700 hover:text-blue-600 font-medium">
-            <ArrowLeft size={20} />
-            Back to Home
-          </Link>
+  const router = useRouter();
+  const result = {
+    symptoms: [],
 
-          {/* Button */}
-          <Link href="/symptoms">
-            <button className="border border-blue-200 text-blue-600 font-semibold rounded-xl px-6 py-2 hover:bg-blue-50 transition">
+    diagnosis: {
+      condition: "",
+      confidence: 0,
+      severity: "",
+    },
+
+    analysis: "",
+
+    description: "",
+
+    precautions: [],
+
+    recommendations: [],
+
+    medicalSection: {
+      mainDepartment: "",
+      relatedDepartment: "",
+    },
+  };
+
+  return (
+    <div className="min-h-screen bg-[#f7fbff]">
+      {/* HEADER */}
+      <div className="border-b border-[#dbe4f0] bg-white">
+        <div className="mx-auto flex h-[88px] max-w-[1150px] items-center justify-between px-6">
+          <button className="flex items-center gap-2 text-[18px] font-medium text-[#475569] transition hover:text-black">
+            <span>←</span>
+            <span>Back to Home</span>
+          </button>
+
+          <div className="flex items-center gap-4">
+            <div className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-gradient-to-r from-[#2563eb] to-[#06b6d4] text-white text-xl shadow-md">
+              ⚕️
+            </div>
+
+            <div>
+              <h1 className="text-[20px] font-bold leading-none text-[#0f172a]">
+                AI Doctor
+              </h1>
+
+              <p className="mt-1 text-[14px] text-[#64748b]">
+                Analysis Results
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center rounded-2xl border border-[#dbe4f0] bg-white p-1">
+              <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#0891b2] px-5 py-2 text-white shadow-sm">
+                <span>🌐</span>
+                <span className="font-medium">EN</span>
+              </button>
+
+              <button className="flex items-center gap-2 px-5 py-2 text-[#475569]">
+                <span>🌐</span>
+                <span className="font-medium">AR</span>
+              </button>
+            </div>
+
+            <button className="rounded-[14px] border border-[#bfdbfe] px-7 py-3 text-[17px] font-medium text-[#2563eb] transition hover:bg-blue-50">
               New Analysis
             </button>
-          </Link>
+          </div>
         </div>
-      </nav>
+      </div>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 pt-10">
-        {/* Alert */}
-        <div className="bg-green-50 border border-green-200 rounded-xl px-6 py-5 flex items-start gap-3 mb-8">
-          <CheckCircle className="text-green-500 mt-1" size={28} />
+      {/* SUCCESS CARD */}
+
+      <div className="mx-auto mt-10 w-full max-w-[1060px] rounded-[24px] border border-[#9ae6b4] bg-[#f0fff4] px-6 py-5 shadow-sm">
+        <div className="flex items-start gap-5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#22c55e] text-2xl text-white">
+            ✓
+          </div>
+
           <div>
-            <div className="font-bold text-lg text-green-900">
+            <h2 className="text-[28px] font-bold text-[#166534]">
               Analysis Complete
-            </div>
-            <div className="text-green-900">
-              Based on your symptoms, we have identified{" "}
-              <span className="font-semibold">4 possible conditions</span>.
-            </div>
-          </div>
-        </div>
+            </h2>
 
-        {/* Title */}
-        <h2 className="text-2xl font-bold text-slate-900 mb-6">
-          Possible Conditions
-        </h2>
-
-        {/* Common Cold */}
-        <div className="bg-white rounded-2xl shadow border border-gray-100 p-7 mb-10">
-          <div className="flex items-center gap-4 mb-2">
-            <span className="text-2xl font-bold text-slate-900">
-              Common Cold
-            </span>
-
-            <span className="flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
-              <CheckCircle size={16} className="text-green-500" />
-              Mild
-            </span>
-          </div>
-
-          <div className="text-gray-700 text-base mb-5">
-            Based on the symptoms you have described, it appears you may be
-            experiencing a common cold, which is a viral infection affecting the
-            upper respiratory tract.
-            <br />
-            <br />
-            Common colds typically present with symptoms like runny nose, sore
-            throat, coughing, and mild fatigue.
-            <br />
-            <br />
-            These infections are highly contagious but generally resolve within
-            7–10 days.
-          </div>
-
-          <div className="flex items-center gap-2 mb-2 text-blue-700 font-semibold">
-            <Info size={18} />
-            Recommendations
-          </div>
-
-          <ul className="space-y-3 text-gray-700 text-base">
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Get plenty of rest
-            </li>
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Stay hydrated
-            </li>
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Monitor symptoms
-            </li>
-          </ul>
-        </div>
-
-        {/* Seasonal Allergies */}
-        <div className="bg-white rounded-2xl shadow border border-gray-100 p-7 mb-10">
-          <div className="flex items-center gap-4 mb-2">
-            <span className="text-2xl font-bold text-slate-900">
-              Seasonal Allergies
-            </span>
-
-            <span className="flex items-center gap-1 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">
-              <CheckCircle size={16} className="text-green-500" />
-              Mild
-            </span>
-          </div>
-
-          <div className="text-gray-700 text-base mb-6">
-            Seasonal allergies occur when your immune system reacts to
-            environmental allergens like pollen or dust.
-            <br />
-            <br />
-            They often cause sneezing, itchy eyes, congestion, and other
-            cold-like symptoms.
-          </div>
-
-          <div className="flex items-center gap-2 mb-3 text-blue-700 font-semibold">
-            <Info size={18} />
-            Recommendations
-          </div>
-
-          <ul className="space-y-3 text-gray-700 text-base">
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Avoid allergen triggers
-            </li>
-
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Use antihistamines if needed
-            </li>
-
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Keep windows closed during high pollen days
-            </li>
-          </ul>
-        </div>
-
-        {/* Viral Gastroenteritis */}
-        <div className="bg-white rounded-2xl shadow border border-gray-100 p-7 mb-10">
-          <div className="flex items-center gap-4 mb-2">
-            <span className="text-2xl font-bold text-slate-900">
-              Viral Gastroenteritis
-            </span>
-
-            <span className="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-xs font-semibold px-3 py-1 rounded-full">
-              Moderate
-            </span>
-          </div>
-
-          <div className="text-gray-700 text-base mb-6">
-            Viral gastroenteritis, often called stomach flu, causes inflammation
-            in the stomach and intestines.
-            <br />
-            <br />
-            Symptoms include nausea, vomiting, diarrhea, and abdominal cramps.
-          </div>
-
-          <div className="flex items-center gap-2 mb-3 text-blue-700 font-semibold">
-            <Info size={18} />
-            Recommendations
-          </div>
-
-          <ul className="space-y-3 text-gray-700 text-base">
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Stay hydrated with clear fluids
-            </li>
-
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Follow a light diet
-            </li>
-
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Avoid dairy and spicy foods
-            </li>
-          </ul>
-        </div>
-
-        {/* Migraine */}
-        <div className="bg-white rounded-2xl shadow border border-gray-100 p-7 mb-10">
-          <div className="flex items-center gap-4 mb-2">
-            <span className="text-2xl font-bold text-slate-900">Migraine</span>
-
-            <span className="flex items-center gap-1 bg-yellow-100 text-yellow-700 text-xs font-semibold px-3 py-1 rounded-full">
-              Moderate
-            </span>
-          </div>
-
-          <div className="text-gray-700 text-base mb-6">
-            Migraines are intense headaches often affecting one side of the head
-            and may include nausea and light sensitivity.
-          </div>
-
-          <div className="flex items-center gap-2 mb-3 text-blue-700 font-semibold">
-            <Info size={18} />
-            Recommendations
-          </div>
-
-          <ul className="space-y-3 text-gray-700 text-base">
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Rest in a dark quiet room
-            </li>
-
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Apply cold compress
-            </li>
-
-            <li className="flex gap-2">
-              <CheckCircle size={18} className="text-green-500 mt-1" />
-              Use pain relief medication if necessary
-            </li>
-          </ul>
-        </div>
-        {/* Next Steps */}
-        <h2 className="text-2xl font-bold text-slate-900 mb-6 mt-10">
-          Next Steps
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
-          {/* Self Care */}
-          <div className="bg-white rounded-2xl border border-green-200 shadow-sm p-6">
-            <div className="bg-green-100 text-green-600 w-12 h-12 flex items-center justify-center rounded-xl mb-4">
-              <Home size={24} />
-            </div>
-
-            <h3 className="text-lg font-bold mb-2">Self-Care at Home</h3>
-
-            <p className="text-gray-600 text-sm mb-3">
-              For mild symptoms, follow the recommendations and monitor your
-              condition.
+            <p className="mt-2 max-w-[780px] text-[18px] leading-8 text-[#166534]">
+              Based on your symptoms, we&apos;ve identified possible conditions.
+              Please review the results below and follow the recommendations.
             </p>
+          </div>
+        </div>
+      </div>
 
-            <span className="text-green-600 text-sm font-medium">
-              Recommended for mild cases
-            </span>
+      {/* ANALYZED SYMPTOMS */}
+      <div className="mx-auto mt-8 w-full max-w-[1060px] rounded-[24px] border border-[#dbeafe] bg-white px-8 py-7 shadow-sm">
+        ...
+      </div>
+
+      {/* MOST LIKELY OUTCOME */}
+      <div className="mx-auto mt-8 w-full max-w-[1060px] rounded-[28px] border border-[#bfdbfe] bg-white px-8 py-8 shadow-sm">
+        {/* TOP */}
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-2xl text-white">
+            🩺
           </div>
 
-          {/* Appointment */}
-          <div className="bg-white rounded-2xl border border-blue-200 shadow-sm p-6">
-            <div className="bg-blue-100 text-blue-600 w-12 h-12 flex items-center justify-center rounded-xl mb-4">
-              <CalendarDays size={24} />
-            </div>
+          <div>
+            <h2 className="text-[20px] font-bold text-[#0f172a]">
+              Most Likely Outcome
+            </h2>
 
-            <h3 className="text-lg font-bold mb-2">Schedule Appointment</h3>
-
-            <p className="text-gray-600 text-sm mb-3">
-              Book a consultation with a healthcare provider for professional
-              assessment.
+            <p className="mt-1 text-[16px] text-[#64748b]">
+              Based on the entered symptoms, this is the most probable result
+              from the model.
             </p>
-
-            <span className="text-blue-600 text-sm font-medium">
-              Recommended for moderate cases
-            </span>
-          </div>
-
-          {/* Emergency */}
-          <div className="bg-white rounded-2xl border border-red-200 shadow-sm p-6">
-            <div className="bg-red-100 text-red-600 w-12 h-12 flex items-center justify-center rounded-xl mb-4">
-              <Phone size={24} />
-            </div>
-
-            <h3 className="text-lg font-bold mb-2">Seek Immediate Care</h3>
-
-            <p className="text-gray-600 text-sm mb-3">
-              Contact emergency services or visit urgent care for severe
-              symptoms.
-            </p>
-
-            <span className="text-red-600 text-sm font-medium">
-              For severe or emergency cases
-            </span>
           </div>
         </div>
 
-        {/* Medical Disclaimer */}
-        <div className="bg-red-50 border border-red-200 rounded-2xl p-6 mb-8">
-          <h3 className="text-red-700 font-bold mb-2">
-            Important Medical Disclaimer
-          </h3>
+        {/* TITLE */}
+        <div className="mt-8 flex items-center gap-4">
+          <h1 className="text-[48px] font-bold leading-tight text-[#0f172a]">
+            Seasonal Allergies
+            <br />
+            (Allergic Rhinitis)
+          </h1>
 
-          <p className="text-red-700 text-sm">
-            This AI analysis is for informational and educational purposes only.
-            It does not constitute medical advice, diagnosis, or treatment.
-            Always seek the advice of your physician or another qualified
-            healthcare provider with any questions regarding a medical
-            condition.
+          <div className="rounded-full bg-[#dcfce7] px-4 py-2 text-[18px] font-semibold text-[#16a34a]">
+            Mild
+          </div>
+        </div>
+
+        {/* SCORE */}
+        <div className="mt-8">
+          <div className="mb-3 flex items-center justify-between">
+            <span className="text-[18px] font-medium text-[#0f172a]">
+              Confidence score
+            </span>
+
+            <span className="text-[20px] font-bold text-[#0f172a]">78%</span>
+          </div>
+
+          {/* BAR */}
+          <div className="h-4 overflow-hidden rounded-full bg-[#e2e8f0]">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-500"
+              style={{ width: "78%" }}
+            />
+          </div>
+        </div>
+
+        {/* INFO BOX */}
+        <div className="mt-8 rounded-2xl border border-[#bfdbfe] bg-[#eff6ff] px-6 py-5">
+          <p className="text-[17px] leading-8 text-[#1e40af]">
+            Confidence score is moderate. Symptoms are consistent with seasonal
+            allergies, but may overlap with other respiratory conditions.
+          </p>
+        </div>
+      </div>
+
+      {/* AI HEALTH ANALYSIS */}
+      <div className="mx-auto mt-8 w-full max-w-[1060px] rounded-[28px] bg-white px-8 py-8 shadow-sm">
+        {/* TOP */}
+        <div className="flex items-center gap-4">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#dbeafe] text-3xl text-[#2563eb]">
+            🩺
+          </div>
+
+          <h2 className="text-[36px] font-bold text-[#0f172a]">
+            AI Health Analysis
+          </h2>
+        </div>
+
+        {/* CONTENT */}
+        <div className="mt-10 space-y-8 text-[22px] leading-[48px] text-[#334155]">
+          <p>
+            Based on the symptoms you&apos;ve described, it appears you may be
+            experiencing seasonal allergies, also known as allergic rhinitis or
+            hay fever.
+          </p>
+
+          <p>
+            This occurs when your immune system overreacts to environmental
+            allergens such as pollen, dust mites, or pet dander. During certain
+            seasons, particularly spring and fall, pollen counts rise
+            significantly and can trigger these symptoms.
+          </p>
+
+          <p>
+            Allergies can cause symptoms similar to a cold but typically don&apos;t
+            include a fever and may be accompanied by itchy, watery eyes.
+          </p>
+        </div>
+      </div>
+
+      {/* DESCRIPTION & PRECAUTIONS */}
+      {/* DESCRIPTION & PRECAUTIONS */}
+
+      <div className="mx-auto mt-8 w-full max-w-[1080px] rounded-[24px] border border-[#e2e8f0] bg-white px-[34px] py-[38px] shadow-sm">
+        {/* HEADER */}
+        <div className="flex items-center gap-5">
+          <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[18px] bg-[#f3e8ff]">
+            <span className="text-[26px] text-[#9333ea]">📄</span>
+          </div>
+
+          <h2 className="text-[22px] font-bold text-[#0f172a]">
+            Description and Precautions
+          </h2>
+        </div>
+
+        {/* DESCRIPTION TEXT */}
+        <div className="mt-10 text-[17px] leading-[50px] text-[#334155]">
+          <p>
+            An allergy is the immune system&apos;s response to a foreign
+            substance that is not normally harmful to your body. These
+            substances can include certain foods, pollen, or pet dander. Your
+            immune system&apos;s job is to keep you healthy by fighting off
+            harmful pathogens.
+          </p>
+
+          <p className="mt-8">
+            When you have allergies, your immune system makes antibodies that
+            identify a particular allergen as harmful, even though it
+            isn&apos;t. When you come into contact with the allergen, your
+            immune system&apos;s reaction can inflame your skin, sinuses,
+            airways, or digestive system.
           </p>
         </div>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-6">
-          {/* Start New Analysis */}
-          <Link href="/symptoms" className="w-full sm:w-auto">
-            <button
-              className="w-full px-8 py-4 rounded-xl text-white font-semibold 
-    bg-gradient-to-r from-blue-600 to-cyan-500 
-    hover:from-blue-700 hover:to-cyan-600
-    shadow-lg hover:shadow-xl
-    transition-all duration-300">
-              Start New Analysis
-            </button>
-          </Link>
+        {/* PRECAUTIONS TITLE */}
+        <h3 className="mt-12 text-[20px] font-bold text-[#0f172a]">
+          Precautions
+        </h3>
 
-          {/* Return Home */}
-          <Link href="/" className="w-full sm:w-auto">
-            <button
-              className="w-full px-8 py-4 rounded-xl font-semibold
-    border border-gray-300
-    text-gray-700
-    hover:bg-gray-100
-    hover:border-gray-400
-    transition-all duration-300">
-              Return to Home
-            </button>
-          </Link>
+        {/* PRECAUTIONS LIST */}
+        <div className="mt-8 flex flex-col gap-6">
+          <div className="flex items-center gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <span className="text-[17px] text-[#334155]">
+              Apply cool compresses to affected areas
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <span className="text-[17px] text-[#334155]">
+              Use saline nasal rinse to clear nasal passages
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <span className="text-[17px] text-[#334155]">
+              Avoid rubbing your eyes
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <span className="text-[17px] text-[#334155]">
+              Wash your hands frequently
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <span className="text-[17px] text-[#334155]">
+              Keep indoor air clean with air purifiers
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <span className="text-[17px] text-[#334155]">
+              Monitor pollen counts and stay indoors when levels are high
+            </span>
+          </div>
         </div>
+      </div>
+
+      {/* RECOMMENDATIONS */}
+      <div className="mx-auto mt-8 w-full max-w-[1020px] rounded-[22px] border border-[#e2e8f0] bg-white px-[28px] py-[30px] shadow-sm">
+        {/* HEADER */}
+        <div className="flex items-center gap-5">
+          <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[18px] bg-[#dcfce7]">
+            <span className="text-[24px] text-[#16a34a]">ⓘ</span>
+          </div>
+
+          <h2 className="text-[22px] font-bold text-[#0f172a]">
+            Recommendations
+          </h2>
+        </div>
+
+        {/* LIST */}
+        <div className="mt-10 flex flex-col gap-6">
+          <div className="flex items-start gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <p className="text-[17px] leading-8 text-[#334155]">
+              Try to identify and avoid your specific allergen triggers when
+              possible
+            </p>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <p className="text-[17px] leading-8 text-[#334155]">
+              Consider taking over-the-counter antihistamine medication to
+              relieve symptoms
+            </p>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <p className="text-[17px] leading-8 text-[#334155]">
+              Keep windows closed during high pollen count days and use air
+              conditioning
+            </p>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <p className="text-[17px] leading-8 text-[#334155]">
+              Shower and change clothes after spending time outdoors during
+              allergy season
+            </p>
+          </div>
+
+          <div className="flex items-start gap-4">
+            <span className="text-[22px] text-[#22c55e]">✓</span>
+
+            <p className="text-[17px] leading-8 text-[#334155]">
+              Use a HEPA filter in your home to reduce airborne allergens
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* PROPOSED MEDICAL SECTION */}
+      <div className="mx-auto mt-8 w-full max-w-[1020px] rounded-[22px] border border-[#bae6fd] bg-white px-[28px] py-[30px] shadow-sm">
+        {/* HEADER */}
+        <div className="flex items-center gap-5">
+          <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[18px] bg-[#cffafe]">
+            <span className="text-[24px] text-[#0891b2]">🏥</span>
+          </div>
+
+          <h2 className="text-[22px] font-bold text-[#0f172a]">
+            Proposed Medical Section
+          </h2>
+        </div>
+
+        {/* MAIN DEPARTMENT */}
+        <div className="mt-10 rounded-[18px] bg-[#ecfeff] px-6 py-5">
+          <p className="text-[18px] font-bold text-[#0f172a]">
+            Main Department:
+          </p>
+
+          <p className="mt-3 text-[20px] text-[#0f172a]">
+            Allergy and Immunology
+          </p>
+        </div>
+
+        {/* RELATED */}
+        <div className="mt-5 rounded-[18px] bg-[#eff6ff] px-6 py-5">
+          <p className="text-[18px] font-bold text-[#1d4ed8]">
+            Related Department:
+          </p>
+
+          <p className="mt-3 text-[19px] text-[#1e40af]">
+            Ear, Nose, and Throat (ENT) / Pulmonology (Chest)
+          </p>
+        </div>
+
+        {/* WARNING */}
+        <div className="mt-6 rounded-[18px] border border-[#fde68a] bg-[#fffbeb] px-6 py-5">
+          <p className="text-[16px] leading-8 text-[#92400e]">
+            ⚠️ This is a guideline only, based on current expectations, and not
+            a final medical referral.
+          </p>
+        </div>
+      </div>
+
+      {/* DISCLAIMER */}
+      <div className="mx-auto mt-8 w-full max-w-[1020px] rounded-[22px] border border-[#fecaca] bg-[#fef2f2] px-[28px] py-[26px] shadow-sm">
+        <div className="flex items-start gap-4">
+          <div className="mt-1 text-[22px] text-[#dc2626]">⚠️</div>
+
+          <div>
+            <h3 className="text-[20px] font-bold text-[#991b1b]">
+              Medical Disclaimer
+            </h3>
+
+            <p className="mt-4 text-[16px] leading-8 text-[#7f1d1d]">
+              This AI-powered analysis is for informational purposes only and
+              should not replace professional medical advice, diagnosis, or
+              treatment. Always consult with a qualified healthcare provider
+              regarding any medical concerns.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* BUTTONS */}
+      <div className="mx-auto mt-10 mb-16 flex w-full max-w-[1020px] items-center justify-center gap-6">
+        <button
+          onClick={() => router.push("/symptoms")}
+          className="rounded-[16px] bg-gradient-to-r from-[#2563eb] to-[#0891b2] px-10 py-4 text-[18px] font-semibold text-white shadow-md transition hover:opacity-90"
+        >
+          Start New Analysis
+        </button>
+
+        <button className="rounded-[16px] border border-[#cbd5e1] bg-white px-10 py-4 text-[18px] font-semibold text-[#334155] transition hover:bg-slate-50">
+          Return Home
+        </button>
       </div>
     </div>
   );
