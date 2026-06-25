@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import AIDoctorHeader from "../symptoms/AIDoctorHeader";
+import { useRouter } from "next/navigation";
 
 type Lang = "EN" | "AR";
 
@@ -152,6 +153,8 @@ const symptomsAR: Record<string, string> = {
 };
 
 export default function SymptomsPage() {
+  const router = useRouter();
+
   const [lang, setLang] = useState<"EN" | "AR">("EN");
 
   const isAR = lang === "AR";
@@ -196,7 +199,7 @@ export default function SymptomsPage() {
 
       if (!currentChatId) {
         const createChatRes = await fetch(
-          "http://grating-gravity-legal.ngrok-free.dev/api/chat/create",
+          "https://grating-gravity-legal.ngrok-free.dev/api/chat/create",
           {
             method: "POST",
             headers: {
@@ -218,7 +221,7 @@ export default function SymptomsPage() {
       const symptomsText = selectedSymptoms.join(", ");
 
       const sendRes = await fetch(
-        "http://grating-gravity-legal.ngrok-free.dev/api/chat/send",
+        "https://grating-gravity-legal.ngrok-free.dev/api/chat/send",
         {
           method: "POST",
           headers: {
@@ -239,6 +242,9 @@ export default function SymptomsPage() {
           sendData.response ||
           "No response",
       );
+      localStorage.setItem("analysisResult", JSON.stringify(sendData));
+
+      router.push("/result");
     } catch (error) {
       console.error(error);
       setAiResponse("Something went wrong");
