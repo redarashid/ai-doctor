@@ -1,39 +1,112 @@
 "use client";
 import { useRouter } from "next/navigation";
-
+import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import { useRef } from "react";
 export default function ResultPage() {
+  const { t, i18n } = useTranslation();
+  console.log("Language =", i18n.language);
   const router = useRouter();
-  const result = {
-    symptoms: [],
+  const stored =
+    typeof window !== "undefined"
+      ? localStorage.getItem("analysisResult")
+      : null;
 
-    diagnosis: {
-      condition: "",
-      confidence: 0,
-      severity: "",
-    },
+  const data = stored ? JSON.parse(stored) : null;
+  console.log(data);
 
-    analysis: "",
+  const prediction = data?.prediction?.predictions?.[0];
 
-    description: "",
+  const disease = prediction?.disease || "Unknown";
 
-    precautions: [],
+  const confidence = prediction?.confidence || 0;
 
-    recommendations: [],
+  const severity = prediction?.severity || "Unknown";
 
-    medicalSection: {
-      mainDepartment: "",
-      relatedDepartment: "",
-    },
+  const description = prediction?.description || "";
+
+  const precautions = prediction?.precautions || [];
+  const causes = prediction?.causes || [];
+  const validSymptoms = data?.prediction?.valid_symptoms || [];
+  const invalidSymptoms = data?.prediction?.invalid_symptoms || [];
+
+  const doctor = prediction?.doctor || "";
+
+  const [translatedDescription, setTranslatedDescription] =
+    useState(description);
+
+  const [translatedPrecautions, setTranslatedPrecautions] = useState<string[]>(
+    [],
+  );
+
+  const translatedOnce = useRef(false);
+
+  useEffect(() => {
+    if (i18n.language !== "ar") {
+      translatedOnce.current = false;
+      setTranslatedDescription(description);
+      setTranslatedPrecautions(precautions);
+      return;
+    }
+
+    if (translatedOnce.current) return;
+
+    translatedOnce.current = true;
+
+    const translateText = async (text: string) => {
+      const res = await fetch("/api/translate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text,
+          target: "ar",
+        }),
+      });
+
+      const result = await res.json();
+
+      return result.translated || text;
+    };
+
+    const run = async () => {
+      const desc = await translateText(description);
+
+      const translated = await Promise.all(
+        precautions.map((p: string) => translateText(p)),
+      );
+
+      setTranslatedDescription(desc);
+      setTranslatedPrecautions(translated);
+    };
+
+    run();
+  }, [i18n.language]);
+
+  const changeLang = async (lang: "en" | "ar") => {
+    await i18n.changeLanguage(lang);
+
+    const symptoms = JSON.parse(
+      localStorage.getItem("analysisSymptoms") || "[]",
+    );
+    console.log("Changing to", lang);
+
+    router.push(
+      `/analyzing?symptoms=${encodeURIComponent(JSON.stringify(symptoms))}`,
+    );
   };
-
   return (
     <div className="min-h-screen bg-[#f7fbff]">
       {/* HEADER */}
       <div className="border-b border-[#dbe4f0] bg-white">
         <div className="mx-auto flex h-[88px] max-w-[1150px] items-center justify-between px-6">
-          <button className="flex items-center gap-2 text-[18px] font-medium text-[#475569] transition hover:text-black">
+          <button
+            onClick={() => router.push("/")}
+            className="flex items-center gap-2 text-[18px] font-medium text-[#475569] transition hover:text-black"
+          >
             <span>←</span>
-            <span>Back to Home</span>
+            <span>{t("backToHome")}</span>
           </button>
 
           <div className="flex items-center gap-4">
@@ -47,26 +120,46 @@ export default function ResultPage() {
               </h1>
 
               <p className="mt-1 text-[14px] text-[#64748b]">
-                Analysis Results
+                {t("analysisResults")}
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="flex items-center rounded-2xl border border-[#dbe4f0] bg-white p-1">
-              <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#0891b2] px-5 py-2 text-white shadow-sm">
+              <button
+                onClick={() => {
+                  console.log("EN button clicked");
+                  changeLang("en");
+                }}
+                className={`flex items-center gap-2 rounded-xl px-5 py-2 shadow-sm ${
+                  i18n.language === "en"
+                    ? "bg-gradient-to-r from-[#2563eb] to-[#0891b2] text-white"
+                    : "text-[#475569]"
+                }`}
+              >
                 <span>🌐</span>
                 <span className="font-medium">EN</span>
               </button>
 
-              <button className="flex items-center gap-2 px-5 py-2 text-[#475569]">
+              <button
+                onClick={() => {
+                  console.log("AR button clicked");
+                  changeLang("ar");
+                }}
+                className={`flex items-center gap-2 rounded-xl px-5 py-2 ${
+                  i18n.language === "ar"
+                    ? "bg-gradient-to-r from-[#2563eb] to-[#0891b2] text-white"
+                    : "text-[#475569]"
+                }`}
+              >
                 <span>🌐</span>
                 <span className="font-medium">AR</span>
               </button>
             </div>
 
             <button className="rounded-[14px] border border-[#bfdbfe] px-7 py-3 text-[17px] font-medium text-[#2563eb] transition hover:bg-blue-50">
-              New Analysis
+              {t("startNewAnalysis")}
             </button>
           </div>
         </div>
@@ -82,12 +175,11 @@ export default function ResultPage() {
 
           <div>
             <h2 className="text-[28px] font-bold text-[#166534]">
-              Analysis Complete
+              {t("analysisComplete")}
             </h2>
 
             <p className="mt-2 max-w-[780px] text-[18px] leading-8 text-[#166534]">
-              Based on your symptoms, we&apos;ve identified possible conditions.
-              Please review the results below and follow the recommendations.
+              {t("analysisSummary")}
             </p>
           </div>
         </div>
@@ -108,12 +200,11 @@ export default function ResultPage() {
 
           <div>
             <h2 className="text-[20px] font-bold text-[#0f172a]">
-              Most Likely Outcome
+              {t("mostLikelyOutcome")}
             </h2>
 
             <p className="mt-1 text-[16px] text-[#64748b]">
-              Based on the entered symptoms, this is the most probable result
-              from the model.
+              {t("basedOnSymptoms")}
             </p>
           </div>
         </div>
@@ -121,13 +212,11 @@ export default function ResultPage() {
         {/* TITLE */}
         <div className="mt-8 flex items-center gap-4">
           <h1 className="text-[48px] font-bold leading-tight text-[#0f172a]">
-            Seasonal Allergies
-            <br />
-            (Allergic Rhinitis)
+            {disease}
           </h1>
 
           <div className="rounded-full bg-[#dcfce7] px-4 py-2 text-[18px] font-semibold text-[#16a34a]">
-            Mild
+            {severity}
           </div>
         </div>
 
@@ -135,17 +224,19 @@ export default function ResultPage() {
         <div className="mt-8">
           <div className="mb-3 flex items-center justify-between">
             <span className="text-[18px] font-medium text-[#0f172a]">
-              Confidence score
+              {t("confidence")}
             </span>
 
-            <span className="text-[20px] font-bold text-[#0f172a]">78%</span>
+            <span className="text-[20px] font-bold text-[#0f172a]">
+              {confidence}%
+            </span>
           </div>
 
           {/* BAR */}
           <div className="h-4 overflow-hidden rounded-full bg-[#e2e8f0]">
             <div
               className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-500"
-              style={{ width: "78%" }}
+              style={{ width: `${confidence}%` }}
             />
           </div>
         </div>
@@ -153,8 +244,7 @@ export default function ResultPage() {
         {/* INFO BOX */}
         <div className="mt-8 rounded-2xl border border-[#bfdbfe] bg-[#eff6ff] px-6 py-5">
           <p className="text-[17px] leading-8 text-[#1e40af]">
-            Confidence score is moderate. Symptoms are consistent with seasonal
-            allergies, but may overlap with other respiratory conditions.
+            {translatedDescription}
           </p>
         </div>
       </div>
@@ -168,32 +258,88 @@ export default function ResultPage() {
           </div>
 
           <h2 className="text-[36px] font-bold text-[#0f172a]">
-            AI Health Analysis
+            {t("aiHealthAnalysis")}
           </h2>
         </div>
 
         {/* CONTENT */}
         <div className="mt-10 space-y-8 text-[22px] leading-[48px] text-[#334155]">
-          <p>
-            Based on the symptoms you&apos;ve described, it appears you may be
-            experiencing seasonal allergies, also known as allergic rhinitis or
-            hay fever.
-          </p>
-
-          <p>
-            This occurs when your immune system overreacts to environmental
-            allergens such as pollen, dust mites, or pet dander. During certain
-            seasons, particularly spring and fall, pollen counts rise
-            significantly and can trigger these symptoms.
-          </p>
-
-          <p>
-            Allergies can cause symptoms similar to a cold but typically don&apos;t
-            include a fever and may be accompanied by itchy, watery eyes.
-          </p>
+          <p>{translatedDescription}</p>
         </div>
       </div>
+      {/* CAUSES */}
+      <div className="mx-auto mt-8 w-full max-w-[1080px] rounded-[24px] border border-[#e2e8f0] bg-white px-[34px] py-[38px] shadow-sm">
+        {/* HEADER */}
+        <div className="flex items-center gap-5">
+          <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[18px] bg-[#fef3c7]">
+            <span className="text-[26px]">🧬</span>
+          </div>
 
+          <h2 className="text-[22px] font-bold text-[#0f172a]">
+            {t("possibleCauses")}
+          </h2>
+        </div>
+
+        {/* LIST */}
+        <div className="mt-8 flex flex-col gap-6">
+          {causes.map((item: string, index: number) => (
+            <div key={index} className="flex items-center gap-4">
+              <span className="text-[22px] text-[#f59e0b]">•</span>
+
+              <span className="text-[17px] text-[#334155]">{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* VALID SYMPTOMS */}
+      {validSymptoms.length > 0 && (
+        <div className="mx-auto mt-8 w-full max-w-[1080px] rounded-[24px] border border-[#e2e8f0] bg-white px-[34px] py-[38px] shadow-sm">
+          {/* HEADER */}
+          <div className="flex items-center gap-5">
+            <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[18px] bg-[#dcfce7]">
+              <span className="text-[24px]">✅</span>
+            </div>
+
+            <h2 className="text-[22px] font-bold text-[#0f172a]">
+              {t("recognizedSymptoms")}
+            </h2>
+          </div>
+
+          {/* LIST */}
+          <div className="mt-8 flex flex-col gap-6">
+            {validSymptoms.map((symptom: string, index: number) => (
+              <div key={index} className="flex items-center gap-4">
+                <span className="text-[22px] text-[#22c55e]">✓</span>
+
+                <span className="text-[17px] text-[#334155]">{symptom}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {/* INVALID SYMPTOMS */}
+      {invalidSymptoms.length > 0 && (
+        <div className="mx-auto mt-8 w-full max-w-[1080px] rounded-[24px] border border-[#fecaca] bg-white px-[34px] py-[38px] shadow-sm">
+          <div className="flex items-center gap-5">
+            <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[18px] bg-[#fee2e2]">
+              <span className="text-[24px]">⚠️</span>
+            </div>
+
+            <h2 className="text-[22px] font-bold text-[#0f172a]">
+              {t("unrecognizedSymptoms")}
+            </h2>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-6">
+            {invalidSymptoms.map((symptom: string, index: number) => (
+              <div key={index} className="flex items-center gap-4">
+                <span className="text-[22px] text-[#ef4444]">✗</span>
+                <span className="text-[17px] text-[#334155]">{symptom}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       {/* DESCRIPTION & PRECAUTIONS */}
       {/* DESCRIPTION & PRECAUTIONS */}
 
@@ -205,144 +351,31 @@ export default function ResultPage() {
           </div>
 
           <h2 className="text-[22px] font-bold text-[#0f172a]">
-            Description and Precautions
+            {t("descriptionPrecautions")}
           </h2>
         </div>
 
         {/* DESCRIPTION TEXT */}
         <div className="mt-10 text-[17px] leading-[50px] text-[#334155]">
-          <p>
-            An allergy is the immune system&apos;s response to a foreign
-            substance that is not normally harmful to your body. These
-            substances can include certain foods, pollen, or pet dander. Your
-            immune system&apos;s job is to keep you healthy by fighting off
-            harmful pathogens.
-          </p>
-
-          <p className="mt-8">
-            When you have allergies, your immune system makes antibodies that
-            identify a particular allergen as harmful, even though it
-            isn&apos;t. When you come into contact with the allergen, your
-            immune system&apos;s reaction can inflame your skin, sinuses,
-            airways, or digestive system.
-          </p>
+          <p>{translatedDescription}</p>
         </div>
 
         {/* PRECAUTIONS TITLE */}
         <h3 className="mt-12 text-[20px] font-bold text-[#0f172a]">
-          Precautions
+          {t("precautions")}
         </h3>
 
         {/* PRECAUTIONS LIST */}
         <div className="mt-8 flex flex-col gap-6">
-          <div className="flex items-center gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
+          {precautions.map((item: string, index: number) => (
+            <div key={index} className="flex items-center gap-4">
+              <span className="text-[22px] text-[#22c55e]">✓</span>
 
-            <span className="text-[17px] text-[#334155]">
-              Apply cool compresses to affected areas
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <span className="text-[17px] text-[#334155]">
-              Use saline nasal rinse to clear nasal passages
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <span className="text-[17px] text-[#334155]">
-              Avoid rubbing your eyes
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <span className="text-[17px] text-[#334155]">
-              Wash your hands frequently
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <span className="text-[17px] text-[#334155]">
-              Keep indoor air clean with air purifiers
-            </span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <span className="text-[17px] text-[#334155]">
-              Monitor pollen counts and stay indoors when levels are high
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* RECOMMENDATIONS */}
-      <div className="mx-auto mt-8 w-full max-w-[1020px] rounded-[22px] border border-[#e2e8f0] bg-white px-[28px] py-[30px] shadow-sm">
-        {/* HEADER */}
-        <div className="flex items-center gap-5">
-          <div className="flex h-[58px] w-[58px] items-center justify-center rounded-[18px] bg-[#dcfce7]">
-            <span className="text-[24px] text-[#16a34a]">ⓘ</span>
-          </div>
-
-          <h2 className="text-[22px] font-bold text-[#0f172a]">
-            Recommendations
-          </h2>
-        </div>
-
-        {/* LIST */}
-        <div className="mt-10 flex flex-col gap-6">
-          <div className="flex items-start gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <p className="text-[17px] leading-8 text-[#334155]">
-              Try to identify and avoid your specific allergen triggers when
-              possible
-            </p>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <p className="text-[17px] leading-8 text-[#334155]">
-              Consider taking over-the-counter antihistamine medication to
-              relieve symptoms
-            </p>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <p className="text-[17px] leading-8 text-[#334155]">
-              Keep windows closed during high pollen count days and use air
-              conditioning
-            </p>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <p className="text-[17px] leading-8 text-[#334155]">
-              Shower and change clothes after spending time outdoors during
-              allergy season
-            </p>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <span className="text-[22px] text-[#22c55e]">✓</span>
-
-            <p className="text-[17px] leading-8 text-[#334155]">
-              Use a HEPA filter in your home to reduce airborne allergens
-            </p>
-          </div>
+              <span className="text-[17px] text-[#334155]">
+                {translatedPrecautions[index] || item}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -355,37 +388,23 @@ export default function ResultPage() {
           </div>
 
           <h2 className="text-[22px] font-bold text-[#0f172a]">
-            Proposed Medical Section
+            {t("proposedMedicalSection")}
           </h2>
         </div>
 
         {/* MAIN DEPARTMENT */}
         <div className="mt-10 rounded-[18px] bg-[#ecfeff] px-6 py-5">
           <p className="text-[18px] font-bold text-[#0f172a]">
-            Main Department:
+            {t("mainDepartment")}
           </p>
 
-          <p className="mt-3 text-[20px] text-[#0f172a]">
-            Allergy and Immunology
-          </p>
-        </div>
-
-        {/* RELATED */}
-        <div className="mt-5 rounded-[18px] bg-[#eff6ff] px-6 py-5">
-          <p className="text-[18px] font-bold text-[#1d4ed8]">
-            Related Department:
-          </p>
-
-          <p className="mt-3 text-[19px] text-[#1e40af]">
-            Ear, Nose, and Throat (ENT) / Pulmonology (Chest)
-          </p>
+          <p className="mt-3 text-[20px] text-[#0f172a]">{doctor}</p>
         </div>
 
         {/* WARNING */}
         <div className="mt-6 rounded-[18px] border border-[#fde68a] bg-[#fffbeb] px-6 py-5">
           <p className="text-[16px] leading-8 text-[#92400e]">
-            ⚠️ This is a guideline only, based on current expectations, and not
-            a final medical referral.
+            {t("medicalWarning")}
           </p>
         </div>
       </div>
@@ -397,14 +416,11 @@ export default function ResultPage() {
 
           <div>
             <h3 className="text-[20px] font-bold text-[#991b1b]">
-              Medical Disclaimer
+              {t("medicalDisclaimer")}
             </h3>
 
             <p className="mt-4 text-[16px] leading-8 text-[#7f1d1d]">
-              This AI-powered analysis is for informational purposes only and
-              should not replace professional medical advice, diagnosis, or
-              treatment. Always consult with a qualified healthcare provider
-              regarding any medical concerns.
+              {t("disclaimerText")}
             </p>
           </div>
         </div>
@@ -416,11 +432,14 @@ export default function ResultPage() {
           onClick={() => router.push("/symptoms")}
           className="rounded-[16px] bg-gradient-to-r from-[#2563eb] to-[#0891b2] px-10 py-4 text-[18px] font-semibold text-white shadow-md transition hover:opacity-90"
         >
-          Start New Analysis
+          {t("startNewAnalysis")}
         </button>
 
-        <button className="rounded-[16px] border border-[#cbd5e1] bg-white px-10 py-4 text-[18px] font-semibold text-[#334155] transition hover:bg-slate-50">
-          Return Home
+        <button
+          onClick={() => router.push("/home")}
+          className="rounded-[16px] border border-[#cbd5e1] bg-white px-10 py-4 text-[18px] font-semibold text-[#334155] transition hover:bg-slate-50"
+        >
+          {t("returnHome")}
         </button>
       </div>
     </div>

@@ -3,8 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Activity, Shield, Sparkles } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Hero() {
+  const { t, i18n } = useTranslation();
   return (
     <div>
       <div className="max-w-screen-2xl mx-auto px-30">
@@ -29,27 +31,64 @@ export default function Hero() {
               </div>
             </div>
             {/* RIGHT — LINKS */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-8">
               <Link
                 href="#"
-                className="text-slate-700 hover:text-blue-600 text-sm">
-                About
+                className="text-sm font-medium text-slate-700 transition hover:text-blue-600"
+              >
+                {t("about")}
               </Link>
+
               <Link
                 href="#"
-                className="text-slate-700 hover:text-blue-600 text-sm">
-                How it Works
+                className="text-sm font-medium text-slate-700 transition hover:text-blue-600"
+              >
+                {t("howItWorks")}
               </Link>
+
               <Link
                 href="/login"
-                className="text-slate-700 hover:text-blue-600 text-sm">
-                Sign In
+                className="text-sm font-medium text-slate-700 transition hover:text-blue-600"
+              >
+                {t("signIn")}
               </Link>
+
               <Link href="/register">
-                <button className="bg-gradient-to-tr from-blue-600 to-blue-800 text-white px-4 py-2 rounded-lg font-semibold shadow hover:from-blue-700 text-sm">
+                <button className="rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:shadow-lg">
                   Sign Up
                 </button>
               </Link>
+
+              {/* Language Switcher */}
+              <div className="ml-2 flex overflow-hidden rounded-xl border border-gray-300">
+                <button
+                  onClick={() => {
+                    i18n.changeLanguage("EN");
+                    localStorage.setItem("lang", "EN");
+                  }}
+                  className={`min-w-[54px] px-4 py-2 text-sm font-semibold transition ${
+                    i18n.language === "EN"
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-slate-700 hover:bg-gray-100"
+                  }`}
+                >
+                  EN
+                </button>
+
+                <button
+                  onClick={() => {
+                    i18n.changeLanguage("AR");
+                    localStorage.setItem("lang", "AR");
+                  }}
+                  className={`min-w-[54px] px-4 py-2 text-sm font-semibold transition ${
+                    i18n.language === "AR"
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-slate-700 hover:bg-gray-100"
+                  }`}
+                >
+                  AR
+                </button>
+              </div>
             </div>
           </div>
         </nav>
@@ -62,29 +101,27 @@ export default function Hero() {
             {/* LEFT SIDE */}
             <div>
               <h1 className="text-6xl lg:text-7xl font-bold leading-tight">
-                Understand Your Symptoms with{" "}
-                <span className="text-blue-600">AI Assistance</span>
+                {t("heroTitle")}{" "}
+                <span className="text-blue-600">{t("heroTitleHighlight")}</span>
               </h1>
               <p className="text-gray-600 text-base md:text-lg mb-8 max-w-xl">
-                Get preliminary health insights and symptom analysis powered by
-                advanced AI. Our system provides guidance to help you make
-                informed decisions about your health.
+                {t("heroDescription")}
               </p>
               {/* BUTTONS */}
               <div className="flex gap-4 mt-6">
                 <Link href="/symptoms">
                   <button className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-5 py-2 rounded-xl font-semibold shadow-lg hover:shadow-blue-300 hover:scale-105 transition text-base">
-                    Start Symptom Analysis →
+                    {t("startAnalysis")} →
                   </button>
                 </Link>
                 <button className="bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-xl font-semibold hover:bg-gray-100 transition text-base">
-                  Learn More
+                  {t("learnMore")}
                 </button>
               </div>
               {/* FEATURES UNDER BUTTONS */}
               <div className="flex items-center gap-6 text-gray-500 font-medium mt-8 text-sm">
-                <span>🛡️ HIPAA Compliant</span>
-                <span>💓 Medical AI Powered</span>
+                <span>🛡️ {t("hipaa")}</span>
+                <span>💓 {t("medicalAi")}</span>
               </div>
             </div>
             {/* RIGHT SIDE IMAGE */}
@@ -103,9 +140,9 @@ export default function Hero() {
                     ✔️
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Analysis Complete</p>
+                    <p className="text-xs text-gray-500">{t("analysisComplete")}Analysis Complete</p>
                     <p className="font-bold text-gray-800 text-sm">
-                      95% Accuracy
+                      {t("accuracy")}
                     </p>
                   </div>
                 </div>
@@ -115,10 +152,10 @@ export default function Hero() {
                     ✨
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Fast Results</p>
+                    <p className="text-xs text-gray-500">{t("fastResults")}</p>
                     <p className="font-bold text-gray-800 text-sm">
                       {" "}
-                      30 Seconds
+                      {t("thirtySeconds")}
                     </p>
                   </div>
                 </div>
@@ -138,33 +175,27 @@ export default function Hero() {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
                 <Activity color="white" size={20} />
               </div>
-              <h3 className="text-lg font-bold mb-1">Smart Analysis</h3>
-              <p className="text-gray-600 text-sm">
-                Our AI analyzes your symptoms using advanced machine learning to
-                provide accurate preliminary assessments.
-              </p>
+              <h3 className="text-lg font-bold mb-1">{t("smartAnalysis")}</h3>
+
+              <p className="text-gray-600 text-sm">{t("smartAnalysisDesc")}</p>
             </div>
             {/* CARD 2 */}
             <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mb-4">
                 <Shield color="white" size={20} />
               </div>
-              <h3 className="text-lg font-bold mb-1">Secure & Private</h3>
-              <p className="text-gray-600 text-sm">
-                Your health data is encrypted and protected. We prioritize your
-                privacy and follow strict security protocols.
-              </p>
+              <h3 className="text-lg font-bold mb-1">{t("securePrivate")}</h3>
+
+              <p className="text-gray-600 text-sm">{t("securePrivateDesc")}</p>
             </div>
             {/* CARD 3 */}
             <div className="bg-white rounded-2xl p-6 border border-blue-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
                 <Sparkles color="white" size={20} />
               </div>
-              <h3 className="text-lg font-bold mb-1">Instant Results</h3>
-              <p className="text-gray-600 text-sm">
-                Get preliminary health insights in seconds. Our system provides
-                quick guidance when you need it most.
-              </p>
+              <h3 className="text-lg font-bold mb-1">{t("instantResults")}</h3>
+
+              <p className="text-gray-600 text-sm">{t("instantResultsDesc")}</p>
             </div>
           </div>
         </div>
@@ -176,10 +207,8 @@ export default function Hero() {
         <div className="max-w-screen-2xl mx-auto px-4 mt-10 pb-20">
           <div className="bg-amber-100 border border-amber-400 text-amber-900 rounded-2xl px-6 py-4 shadow-md">
             <p className="text-base">
-              <span className="font-bold">Medical Disclaimer:</span> This AI
-              tool is for informational purposes only and does not replace
-              professional medical advice, diagnosis, or treatment. Always
-              consult with a qualified healthcare provider for medical concerns.
+              <span className="font-bold">{t("medicalDisclaimer")}:</span> This AI
+              {t("disclaimerText")}
             </p>
           </div>
         </div>

@@ -1,0 +1,85 @@
+{
+  "backToHome": "العودة للرئيسية",
+  "analysisComplete": "اكتمل التحليل",
+  "mostLikelyOutcome": "التشخيص الأكثر احتمالاً",
+  "confidence": "نسبة الثقة",
+  "severity": "درجة الخطورة",
+  "description": "الوصف",
+  "precautions": "الاحتياطات",
+  "recommendedDoctor": "الطبيب الموصى به",
+  "medicalDisclaimer": "إخلاء المسؤولية الطبية",
+  "startNewAnalysis": "بدء تحليل جديد",
+  "returnHome": "العودة للرئيسية",
+
+  "analysisResults": "نتائج التحليل",
+  "aiHealthAnalysis": "تحليل الذكاء الاصطناعي",
+  "descriptionPrecautions": "الوصف والاحتياطات",
+  "recommendations": "التوصيات",
+  "proposedMedicalSection": "القسم الطبي المقترح",
+  "mainDepartment": "القسم الرئيسي",
+  "medicalWarning": "⚠️ هذا مجرد اقتراح مبدئي وليس إحالة طبية نهائية.",
+
+  "basedOnSymptoms": "بناءً على الأعراض التي أدخلتها، فهذا هو التشخيص الأكثر احتمالاً من النموذج.",
+  "analysisSummary": "بناءً على الأعراض التي أدخلتها، حدد الذكاء الاصطناعي بعض الحالات المحتملة. يُرجى مراجعة النتائج واتباع التوصيات.",
+  "disclaimerText": "هذا التحليل المعتمد على الذكاء الاصطناعي مخصص للأغراض المعلوماتية فقط، ولا يُغني عن استشارة الطبيب أو التشخيص أو العلاج. يُرجى دائمًا استشارة مقدم رعاية صحية مؤهل بشأن أي مشكلة صحية.",
+
+  "possibleCauses": "الأسباب المحتملة",
+  "recognizedSymptoms": "الأعراض المعترف بها",
+  "unrecognizedSymptoms": "الأعراض غير المعترف بها",
+  "descriptionTitle": "الوصف",
+  "precautionsTitle": "الاحتياطات",
+  "recommendationsTitle": "التوصيات",
+  "medicalDepartment": "القسم الطبي",
+  "mainDepartmentTitle": "القسم الرئيسي",
+  "analysisDisclaimer": "إخلاء المسؤولية الطبية",
+
+  "about": "من نحن",
+  "howItWorks": "كيف يعمل",
+  "signIn": "تسجيل الدخول",
+  "signUp": "إنشاء حساب",
+
+  "heroTitle": "افهم أعراضك بمساعدة",
+  "heroTitleHighlight": "الذكاء الاصطناعي",
+
+  "heroDescription": "احصل على تحليل مبدئي للأعراض ورؤى صحية مدعومة بالذكاء الاصطناعي لمساعدتك على اتخاذ قرارات صحية أفضل.",
+
+  "startAnalysis": "ابدأ تحليل الأعراض",
+  "learnMore": "اعرف المزيد",
+
+  "hipaa": "متوافق مع HIPAA",
+  "medicalAi": "مدعوم بالذكاء الاصطناعي الطبي",
+
+  "smartAnalysis": "تحليل ذكي",
+  "smartAnalysisDesc": "يقوم الذكاء الاصطناعي بتحليل الأعراض باستخدام تقنيات تعلم الآلة لتقديم تقييمات أولية دقيقة.",
+
+  "securePrivate": "آمن وخاص",
+  "securePrivateDesc": "يتم تشفير بياناتك الصحية وحمايتها، مع الالتزام بأعلى معايير الخصوصية والأمان.",
+
+  "instantResults": "نتائج فورية",
+  "instantResultsDesc": "احصل على نتائج وتحليلات أولية خلال ثوانٍ لمساعدتك في الوقت المناسب.",
+
+  "accuracy": "دقة 95%",
+  "fastResults": "نتائج سريعة",
+  "thirtySeconds": "30 ثانية",
+
+  "selectCategory": "اختر فئة المرض",
+  "describeSymptoms": "صف أعراضك",
+  "chooseSystem": "اختر الجهاز الأكثر ارتباطًا بأعراضك",
+  "selectSymptoms": "اختر الأعراض",
+  "relatedTo": "اختر الأعراض المتعلقة بـ",
+  "clearAll": "مسح الكل",
+  "searchSymptoms": "ابحث عن الأعراض...",
+  "analyzeSymptoms": "تحليل الأعراض",
+  "note": "ملاحظة:",
+  "noteText": "كلما قدمت أعراضًا أكثر، كانت نتائج تحليل الذكاء الاصطناعي أكثر دقة.",
+  "analysisResult": "نتيجة التحليل",
+  "aiAnalysis": "تحليل الذكاء الاصطناعي",
+
+  "analyzingTitle": "جارٍ تحليل الأعراض",
+  "analyzingSubtitle": "يقوم الذكاء الاصطناعي بمعالجة معلوماتك...",
+  "processingSymptoms": "معالجة الأعراض",
+  "analyzingPatterns": "تحليل الأنماط",
+  "generatingInsights": "إنشاء النتائج",
+  "analyzingCard": "جارٍ التحليل",
+  "analyzing": "جارٍ التحليل..."
+}

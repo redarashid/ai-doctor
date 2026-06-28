@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
 import AnimatedPage from "../../components/animation/AnimatedPage";
-
+import Providers from "./providers";
 // Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,8 +24,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AnimatedPage>{children}</AnimatedPage>
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <Providers>
+          <AnimatedPage>{children}</AnimatedPage>
+        </Providers>
       </body>
     </html>
   );

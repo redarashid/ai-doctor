@@ -1,0 +1,86 @@
+{
+  "backToHome": "Back to Home",
+  "analysisComplete": "Analysis Complete",
+  "mostLikelyOutcome": "Most Likely Outcome",
+  "confidence": "Confidence",
+  "severity": "Severity",
+  "description": "Description",
+  "precautions": "Precautions",
+  "recommendedDoctor": "Recommended Doctor",
+  "medicalDisclaimer": "Medical Disclaimer",
+  "startNewAnalysis": "Start New Analysis",
+  "returnHome": "Return Home",
+
+  "analysisResults": "Analysis Results",
+  "aiHealthAnalysis": "AI Health Analysis",
+  "descriptionPrecautions": "Description and Precautions",
+  "recommendations": "Recommendations",
+  "proposedMedicalSection": "Proposed Medical Section",
+  "mainDepartment": "Main Department",
+  "medicalWarning": "⚠️ This is a guideline only, based on current expectations, and not a final medical referral.",
+
+  "basedOnSymptoms": "Based on the entered symptoms, this is the most probable result from the model.",
+  "analysisSummary": "Based on your symptoms, we've identified possible conditions. Please review the results below and follow the recommendations.",
+  "disclaimerText": "This AI-powered analysis is for informational purposes only and should not replace professional medical advice, diagnosis, or treatment. Always consult with a qualified healthcare provider regarding any medical concerns.",
+
+  "possibleCauses": "Possible Causes",
+  "recognizedSymptoms": "Recognized Symptoms",
+  "unrecognizedSymptoms": "Unrecognized Symptoms",
+  "descriptionTitle": "Description",
+  "precautionsTitle": "Precautions",
+  "recommendationsTitle": "Recommendations",
+  "medicalDepartment": "Medical Department",
+  "mainDepartmentTitle": "Main Department",
+  "analysisDisclaimer": "Medical Disclaimer",
+
+  "about": "About",
+  "howItWorks": "How it Works",
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+
+  "heroTitle": "Understand Your Symptoms with",
+  "heroTitleHighlight": "AI Assistance",
+
+  "heroDescription": "Get preliminary health insights and symptom analysis powered by advanced AI. Our system provides guidance to help you make informed decisions about your health.",
+
+  "startAnalysis": "Start Symptom Analysis",
+  "learnMore": "Learn More",
+
+  "hipaa": "HIPAA Compliant",
+  "medicalAi": "Medical AI Powered",
+
+  "smartAnalysis": "Smart Analysis",
+  "smartAnalysisDesc": "Our AI analyzes your symptoms using advanced machine learning to provide accurate preliminary assessments.",
+
+  "securePrivate": "Secure & Private",
+  "securePrivateDesc": "Your health data is encrypted and protected. We prioritize your privacy and follow strict security protocols.",
+
+  "instantResults": "Instant Results",
+  "instantResultsDesc": "Get preliminary health insights in seconds. Our system provides quick guidance when you need it most.",
+
+  "accuracy": "95% Accuracy",
+  "fastResults": "Fast Results",
+  "thirtySeconds": "30 Seconds",
+
+  "selectCategory": "Select Disease Category",
+  "describeSymptoms": "Describe Your Symptoms",
+  "chooseSystem": "Choose the body system most related to your symptoms",
+  "selectSymptoms": "Select Symptoms",
+  "relatedTo": "Choose symptoms related to",
+  "clearAll": "Clear All",
+  "searchSymptoms": "Search symptoms...",
+  "analyzeSymptoms": "Analyze Symptoms",
+  "note": "Note:",
+  "noteText": "The more symptoms you provide, the more accurate our AI analysis will be.",
+  "analysisResult": "Analysis Result",
+  "aiAnalysis": "AI Analysis",
+
+  "analyzingTitle": "Analyzing Your Symptoms",
+  "analyzingSubtitle": "Our AI is processing your information...",
+  "processingSymptoms": "Processing symptoms",
+  "analyzingPatterns": "Analyzing patterns",
+  "generatingInsights": "Generating insights",
+  "analyzingCard": "ANALYZING",
+  "analyzing": "Analyzing..."
+  
+}

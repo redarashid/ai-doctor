@@ -2,17 +2,14 @@
 
 import { ArrowLeft, Stethoscope } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
-type Language = "EN" | "AR";
 
-export default function AIDoctorHeader({
-  lang,
-  setLang,
-}: {
-  lang: Language;
-  setLang: (l: Language) => void;
-}) {
+export default function AIDoctorHeader() {
   const router = useRouter();
+  const { i18n } = useTranslation();
+
+  const lang = i18n.language === "AR" ? "AR" : "EN";
 
   return (
     <header className="w-full pt-0 bg-white border-b border-gray-100 shadow-sm">
@@ -47,22 +44,30 @@ export default function AIDoctorHeader({
         {/* RIGHT SIDE - ONLY FIXED LANGUAGE */}
         <div className="flex items-center gap-2 bg-gray-50 p-1 rounded-xl">
           <button
-            onClick={() => setLang("EN")}
+            onClick={() => {
+              i18n.changeLanguage("EN");
+              localStorage.setItem("lang", "EN");
+            }}
             className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
               lang === "EN"
                 ? "bg-blue-500 text-white shadow-sm"
                 : "text-gray-400 hover:text-gray-600"
-            }`}>
+            }`}
+          >
             EN
           </button>
 
           <button
-            onClick={() => setLang("AR")}
+            onClick={() => {
+              i18n.changeLanguage("AR");
+              localStorage.setItem("lang", "AR");
+            }}
             className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
               lang === "AR"
                 ? "bg-blue-500 text-white shadow-sm"
                 : "text-gray-400 hover:text-gray-600"
-            }`}>
+            }`}
+          >
             AR
           </button>
         </div>
