@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("Profile");
+  const [isEditing, setIsEditing] = useState(false);
 
   const BASE_URL =
     "https://brenden-edificatory-gisela.ngrok-free.dev";
@@ -12,6 +13,10 @@ export default function ProfilePage() {
     name: "",
     email: "",
     dob: "",
+    joinDate: "",
+    analysesCompleted: 0,
+    daysActive: 0,
+    healthInsights: 0,
   });
 
   // =========================
@@ -31,6 +36,10 @@ export default function ProfilePage() {
           name: data.name || "",
           email: data.email || "",
           dob: data.dob || "",
+          joinDate: data.joinDate || data.created_at || "",
+          analysesCompleted: data.analysesCompleted || 0,
+          daysActive: data.daysActive || 0,
+          healthInsights: data.healthInsights || 0,
         });
       } catch (err) {
         console.log(err);
@@ -57,6 +66,7 @@ export default function ProfilePage() {
       const data = await res.json();
 
       alert(data.message || "Profile updated successfully");
+      setIsEditing(false);
     } catch (err) {
       console.log(err);
     }
@@ -101,6 +111,14 @@ export default function ProfilePage() {
       console.log(err);
     }
   };
+
+  const formattedJoinDate = userData.joinDate
+    ? new Date(userData.joinDate).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "";
 
   return (
     <div
@@ -255,23 +273,175 @@ export default function ProfilePage() {
                 >
                   {userData.email}
                 </p>
+
+                {formattedJoinDate && (
+                  <div
+                    className="flex items-center gap-1"
+                    style={{ color: "#9ca3af", fontSize: 13 }}
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="16"
+                        rx="2"
+                        stroke="#9ca3af"
+                        strokeWidth="1.5"
+                      />
+                      <path
+                        d="M3 9h18M8 3v4M16 3v4"
+                        stroke="#9ca3af"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    Joined {formattedJoinDate}
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Save Button */}
-            <button
-              onClick={handleSave}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium"
-              style={{
-                border: "1.5px solid #3b82f6",
-                borderRadius: 10,
-                background: "#3b82f6",
-                color: "white",
-                cursor: "pointer",
-              }}
-            >
-              Save Changes
-            </button>
+            {/* Edit / Save Button */}
+            {isEditing ? (
+              <button
+                onClick={handleSave}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium"
+                style={{
+                  border: "1.5px solid #3b82f6",
+                  borderRadius: 10,
+                  background: "#3b82f6",
+                  color: "white",
+                  cursor: "pointer",
+                }}
+              >
+                Save Changes
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsEditing(true)}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium"
+                style={{
+                  border: "1.5px solid #3b82f6",
+                  borderRadius: 10,
+                  background: "white",
+                  color: "#3b82f6",
+                  cursor: "pointer",
+                }}
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M12 20h9"
+                    stroke="#3b82f6"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"
+                    stroke="#3b82f6"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Edit Profile
+              </button>
+            )}
+          </div>
+
+          {/* Stats Row */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              marginTop: 24,
+              paddingTop: 20,
+              borderTop: "1px solid #f3f4f6",
+            }}
+          >
+            <div style={{ textAlign: "center" }}>
+              <div
+                className="flex items-center justify-center gap-2"
+                style={{ marginBottom: 4 }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke="#22c55e" strokeWidth="2" />
+                  <path
+                    d="M8 12l2.5 2.5L16 9"
+                    stroke="#22c55e"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span style={{ fontSize: 22, fontWeight: 700, color: "#111827" }}>
+                  {userData.analysesCompleted}
+                </span>
+              </div>
+              <p style={{ fontSize: 13, color: "#6b7280" }}>
+                Analyses Completed
+              </p>
+            </div>
+
+            <div style={{ textAlign: "center" }}>
+              <div
+                className="flex items-center justify-center gap-2"
+                style={{ marginBottom: 4 }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="9" stroke="#3b82f6" strokeWidth="2" />
+                  <path
+                    d="M12 7v5l3.5 2"
+                    stroke="#3b82f6"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span style={{ fontSize: 22, fontWeight: 700, color: "#111827" }}>
+                  {userData.daysActive}
+                </span>
+              </div>
+              <p style={{ fontSize: 13, color: "#6b7280" }}>Days Active</p>
+            </div>
+
+            <div style={{ textAlign: "center" }}>
+              <div
+                className="flex items-center justify-center gap-2"
+                style={{ marginBottom: 4 }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M3 17l5-5 4 4 8-8"
+                    stroke="#a855f7"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M14 8h6v6"
+                    stroke="#a855f7"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span style={{ fontSize: 22, fontWeight: 700, color: "#111827" }}>
+                  {userData.healthInsights}
+                </span>
+              </div>
+              <p style={{ fontSize: 13, color: "#6b7280" }}>Health Insights</p>
+            </div>
           </div>
         </div>
 
@@ -358,6 +528,7 @@ export default function ProfilePage() {
 
               <input
                 value={userData.name}
+                disabled={!isEditing}
                 onChange={(e) =>
                   setUserData({
                     ...userData,
@@ -370,7 +541,8 @@ export default function ProfilePage() {
                   padding: "12px 14px",
                   borderRadius: 10,
                   fontSize: 14,
-                  color: "#374151",
+                  color: isEditing ? "#374151" : "#9ca3af",
+                  background: isEditing ? "white" : "#fafafa",
                   outline: "none",
                   boxSizing: "border-box",
                 }}
@@ -392,6 +564,7 @@ export default function ProfilePage() {
 
               <input
                 value={userData.email}
+                disabled={!isEditing}
                 onChange={(e) =>
                   setUserData({
                     ...userData,
@@ -404,7 +577,8 @@ export default function ProfilePage() {
                   padding: "12px 14px",
                   borderRadius: 10,
                   fontSize: 14,
-                  color: "#374151",
+                  color: isEditing ? "#374151" : "#9ca3af",
+                  background: isEditing ? "white" : "#fafafa",
                   outline: "none",
                   boxSizing: "border-box",
                 }}
@@ -427,6 +601,7 @@ export default function ProfilePage() {
               <input
                 type="date"
                 value={userData.dob}
+                disabled={!isEditing}
                 onChange={(e) =>
                   setUserData({
                     ...userData,
@@ -439,7 +614,8 @@ export default function ProfilePage() {
                   padding: "12px 14px",
                   borderRadius: 10,
                   fontSize: 14,
-                  color: "#374151",
+                  color: isEditing ? "#374151" : "#9ca3af",
+                  background: isEditing ? "white" : "#fafafa",
                   outline: "none",
                   boxSizing: "border-box",
                 }}
